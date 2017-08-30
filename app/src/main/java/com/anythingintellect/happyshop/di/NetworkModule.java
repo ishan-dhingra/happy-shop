@@ -1,4 +1,6 @@
-package com.anythingintellect.happyshop.network;
+package com.anythingintellect.happyshop.di;
+
+import com.anythingintellect.happyshop.network.HappyShopAPIService;
 
 import javax.inject.Singleton;
 

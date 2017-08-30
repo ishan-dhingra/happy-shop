@@ -1,11 +1,15 @@
 package com.anythingintellect.happyshop.model;
 
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
+
 /**
  * Created by ishan.dhingra on 30/08/17.
  */
 
-public class Product {
+public class Product extends RealmObject {
 
+    @PrimaryKey
     private long id;
     private String name;
     private String category;

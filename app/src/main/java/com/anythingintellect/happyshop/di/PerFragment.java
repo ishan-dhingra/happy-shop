@@ -1,4 +1,4 @@
-package com.anythingintellect.happyshop.network;
+package com.anythingintellect.happyshop.di;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

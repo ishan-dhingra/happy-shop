@@ -1,4 +1,4 @@
-package com.anythingintellect.happyshop.network;
+package com.anythingintellect.happyshop.di;
 
 import android.content.Context;
 
