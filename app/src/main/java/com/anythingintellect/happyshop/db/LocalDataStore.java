@@ -25,4 +25,6 @@ public interface LocalDataStore {
 
     void addToCart(long id);
 
+    long getCartCount();
+
 }

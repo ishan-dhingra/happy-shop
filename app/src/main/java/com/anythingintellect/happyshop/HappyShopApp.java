@@ -5,6 +5,7 @@ import android.app.Application;
 import com.anythingintellect.happyshop.di.AppComponent;
 import com.anythingintellect.happyshop.di.DaggerAppComponent;
 import com.anythingintellect.happyshop.di.NetworkModule;
+import com.anythingintellect.happyshop.di.PersistenceModule;
 import com.anythingintellect.happyshop.util.Constant;
 
 import io.realm.Realm;
@@ -27,6 +28,7 @@ public class HappyShopApp extends Application {
     private void initAppComponent() {
         appComponent = DaggerAppComponent
                 .builder()
+                .persistenceModule(new PersistenceModule(false))
                 .networkModule(new NetworkModule(Constant.BASE_URL))
                 .build();
     }

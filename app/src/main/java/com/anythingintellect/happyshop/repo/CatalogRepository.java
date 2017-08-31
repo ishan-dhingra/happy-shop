@@ -11,7 +11,7 @@ import io.realm.RealmResults;
  * Created by ishan.dhingra on 31/08/17.
  */
 
-interface CatalogRepository {
+public interface CatalogRepository {
     List<Category> getCategories();
 
     RealmResults<Product> getProductsByCategory(String category);

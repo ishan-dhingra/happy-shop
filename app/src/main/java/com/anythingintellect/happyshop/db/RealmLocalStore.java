@@ -66,4 +66,9 @@ public class RealmLocalStore implements LocalDataStore {
             }
         });
     }
+
+    @Override
+    public long getCartCount() {
+        return realm.where(CartEntry.class).count();
+    }
 }

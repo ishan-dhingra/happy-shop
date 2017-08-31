@@ -1,5 +1,8 @@
 package com.anythingintellect.happyshop.di;
 
+import com.anythingintellect.happyshop.db.LocalDataStore;
+import com.anythingintellect.happyshop.db.RealmLocalStore;
+
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -34,6 +37,11 @@ public class PersistenceModule {
     @Provides
     public Realm providesRealm(RealmConfiguration realmConfiguration) {
         return Realm.getInstance(realmConfiguration);
+    }
+
+    @Provides
+    public LocalDataStore providesLocalDataStore(Realm realm) {
+        return new RealmLocalStore(realm);
     }
 
 }

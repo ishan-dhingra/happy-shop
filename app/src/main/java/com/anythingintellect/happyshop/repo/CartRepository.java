@@ -8,8 +8,10 @@ import io.realm.RealmResults;
  * Created by ishan.dhingra on 31/08/17.
  */
 
-interface CartRepository {
+public interface CartRepository {
     void addToCart(long productId);
 
     RealmResults<CartEntry> getCartEntry(long productId);
+
+    long getCartCount();
 }

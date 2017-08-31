@@ -26,4 +26,10 @@ public class CartRepositoryImpl implements CartRepository {
     public RealmResults<CartEntry> getCartEntry(long productId) {
         return localStore.getCartEntryByProduct(productId);
     }
+
+    @Override
+    public long getCartCount() {
+        return localStore.getCartCount();
+    }
+
 }

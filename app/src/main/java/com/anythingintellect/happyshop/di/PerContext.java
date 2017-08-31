@@ -10,6 +10,6 @@ import javax.inject.Scope;
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Scope
-public @interface PerFragment {
+public @interface PerContext {
 
 }
