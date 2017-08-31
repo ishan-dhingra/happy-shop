@@ -15,6 +15,6 @@ public class CartRepository {
     }
 
     public void addToCart(long productId) {
-
+        localStore.addToCart(productId);
     }
 }
