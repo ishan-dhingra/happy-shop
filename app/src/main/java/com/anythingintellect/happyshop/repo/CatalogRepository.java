@@ -3,10 +3,13 @@ package com.anythingintellect.happyshop.repo;
 import com.anythingintellect.happyshop.R;
 import com.anythingintellect.happyshop.db.LocalDataStore;
 import com.anythingintellect.happyshop.model.Category;
+import com.anythingintellect.happyshop.model.Product;
 import com.anythingintellect.happyshop.network.HappyShopAPIService;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import io.realm.RealmResults;
 
 /**
  * Created by ishan.dhingra on 31/08/17.
@@ -35,5 +38,9 @@ public class CatalogRepository {
 
     public List<Category> getCategories() {
         return categories;
+    }
+
+    public RealmResults<Product> getProductsByCategory(String category) {
+        return null;
     }
 }
