@@ -137,7 +137,7 @@ public class RealmLocalStoreTest {
                 RealmResults<Product> resultProduct = localStore.getProductById(product.getId());
                 assertNotEquals(null, resultProduct);
                 resultProduct.load();
-                assertEquals(product.getId(), resultProduct.get(0).getId());
+                assertEquals(product, resultProduct.get(0));
             }
         });
     }
