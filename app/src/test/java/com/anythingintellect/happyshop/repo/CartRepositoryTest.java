@@ -26,7 +26,7 @@ public class CartRepositoryTest extends BaseTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        cartRepository = new CartRepository(localStore);
+        cartRepository = new CartRepositoryImpl(localStore);
     }
 
 
