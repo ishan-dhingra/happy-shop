@@ -121,6 +121,26 @@ public class RealmLocalStoreTest {
     }
 
     // Should get product by id
+    @Test
+    @UiThreadTest
+    public void testGetProductById_ShouldReturnSavedProductById() {
+        runOnMainThread(new Runnable() {
+            Product product = MockData.getProduct();
+            @Override
+            public void run() {
+                realm.executeTransaction(new Realm.Transaction() {
+                    @Override
+                    public void execute(Realm realm) {
+                        realm.copyToRealmOrUpdate(product);
+                    }
+                });
+                RealmResults<Product> resultProduct = localStore.getProductById(product.getId());
+                assertNotEquals(null, resultProduct);
+                resultProduct.load();
+                assertEquals(product.getId(), resultProduct.get(0).getId());
+            }
+        });
+    }
 
     // Should get cart entry by product id
 
