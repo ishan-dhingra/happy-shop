@@ -1,5 +1,6 @@
 package com.anythingintellect.happyshop.di;
 
+import com.anythingintellect.happyshop.view.CategoryListFragment;
 import com.anythingintellect.happyshop.view.MainActivity;
 
 import dagger.Subcomponent;
@@ -13,5 +14,6 @@ import dagger.Subcomponent;
 public interface ContextComponent {
 
     void inject(MainActivity mainActivity);
+    void inject(CategoryListFragment fragment);
 
 }
