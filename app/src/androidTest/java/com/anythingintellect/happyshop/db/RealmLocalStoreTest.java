@@ -1,5 +1,6 @@
 package com.anythingintellect.happyshop.db;
 
+import android.app.Instrumentation;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Looper;
@@ -37,13 +38,9 @@ public class RealmLocalStoreTest {
     private Realm realm;
     private RealmLocalStore localStore;
 
-    Handler realmHandler;
-
-
     @Before
     public void setup() {
-        realmHandler = new Handler(Looper.getMainLooper());
-        realmHandler.post(new Runnable() {
+        runOnMainThread(new Runnable() {
             @Override
             public void run() {
                 RealmConfiguration.Builder builder = new RealmConfiguration.Builder();
@@ -56,9 +53,14 @@ public class RealmLocalStoreTest {
         MockData.init();
     }
 
+    public void runOnMainThread(Runnable runnable) {
+        InstrumentationRegistry.getInstrumentation()
+                .runOnMainSync(runnable);
+    }
+
     @After
     public void tearDown() {
-        realmHandler.post(new Runnable() {
+        runOnMainThread(new Runnable() {
             @Override
             public void run() {
                 realm.close();
@@ -71,7 +73,7 @@ public class RealmLocalStoreTest {
     @Test
     @UiThreadTest
     public void testGetProductByCategory_shouldReturnAllProductForGivenCategoryOnly() {
-        realmHandler.post(new Runnable() {
+        runOnMainThread(new Runnable() {
             @Override
             public void run() {
                 final List<Product> productList = MockData.getProductList();
