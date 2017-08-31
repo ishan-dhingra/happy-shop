@@ -5,9 +5,12 @@ import com.anythingintellect.happyshop.db.LocalDataStore;
 import com.anythingintellect.happyshop.model.Category;
 import com.anythingintellect.happyshop.model.Product;
 import com.anythingintellect.happyshop.model.ProductListResponse;
+import com.anythingintellect.happyshop.model.ProductResponse;
 import com.anythingintellect.happyshop.network.HappyShopAPIService;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import io.reactivex.Observer;
@@ -86,7 +89,36 @@ public class CatalogRepository {
                 });
     }
 
-    public void fetchAndPersistProduct(long prodId) {
+    public void fetchAndPersistProduct(final long prodId) {
+        apiService.getProduct(prodId)
+                .subscribeOn(Schedulers.newThread())
+                .map(new Function<ProductResponse, Product>() {
+                    @Override
+                    public Product apply(@NonNull ProductResponse productResponse) throws Exception {
+                        return productResponse.getProduct();
+                    }
+                })
+                .subscribe(new Observer<Product>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(@NonNull Product product) {
+                        localStore.saveProducts(Collections.singletonList(product));
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
 
     }
 }
