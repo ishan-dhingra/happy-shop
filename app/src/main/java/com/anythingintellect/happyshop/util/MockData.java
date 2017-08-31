@@ -1,5 +1,6 @@
 package com.anythingintellect.happyshop.util;
 
+import com.anythingintellect.happyshop.model.CartEntry;
 import com.anythingintellect.happyshop.model.Product;
 import com.anythingintellect.happyshop.model.ProductListResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -22,6 +23,7 @@ public class MockData {
     private static final String category = "Makeup";
     private static List<Product> productList;
     private static Product product;
+    private static CartEntry cartEntry;
 
     public static void init() {
         productList = new ArrayList<>();
@@ -43,6 +45,8 @@ public class MockData {
             e.printStackTrace();
         }
         product = productList.get(0);
+        cartEntry = new CartEntry();
+        cartEntry.setProductId(100);
     }
 
     public static List<Product> getProductList() {
@@ -55,5 +59,9 @@ public class MockData {
 
     public static String getCategory() {
         return category;
+    }
+
+    public static CartEntry getCartEntry() {
+        return cartEntry;
     }
 }

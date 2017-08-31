@@ -19,4 +19,15 @@ public class CartEntry extends RealmObject {
     public void setProductId(long productId) {
         this.productId = productId;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        if (obj instanceof CartEntry) {
+            return ((CartEntry)obj).getProductId() == getProductId();
+        }
+        return false;
+    }
 }

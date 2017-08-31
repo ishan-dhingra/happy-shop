@@ -9,6 +9,7 @@ import android.support.test.annotation.UiThreadTest;
 import android.support.test.rule.UiThreadTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
+import com.anythingintellect.happyshop.model.CartEntry;
 import com.anythingintellect.happyshop.model.Product;
 import com.anythingintellect.happyshop.util.MockData;
 
@@ -143,6 +144,27 @@ public class RealmLocalStoreTest {
     }
 
     // Should get cart entry by product id
+    @Test
+    @UiThreadTest
+    public void testGetCartEntry_ShouldReturnEntryIfAddedToCard() {
+        runOnMainThread(new Runnable() {
+            @Override
+            public void run() {
+                final CartEntry cartEntry = MockData.getCartEntry();
+                realm.executeTransaction(new Realm.Transaction() {
+                    @Override
+                    public void execute(Realm realm) {
+                        realm.copyToRealmOrUpdate(cartEntry);
+                    }
+                });
+                RealmResults<CartEntry> cartEntryResult = localStore
+                        .getCartEntryByProduct(cartEntry.getProductId());
+                assertNotEquals(null, cartEntryResult);
+                cartEntryResult.load();
+                assertEquals(cartEntry, cartEntryResult.get(0));
+            }
+        });
+    }
 
     // Should add to cart
 
