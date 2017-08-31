@@ -13,6 +13,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.robolectric.RobolectricTestRunner;
+import org.robolectric.annotation.Config;
 
 import java.util.List;
 
@@ -28,6 +29,7 @@ import static org.mockito.Mockito.when;
  */
 
 @RunWith(RobolectricTestRunner.class)
+@Config(manifest = Config.NONE)
 public class CatalogRepositoryTest {
 
     private CatalogRepository catalogRepository;
@@ -54,7 +56,7 @@ public class CatalogRepositoryTest {
     // getProductByCategory
     // Should return from localStore and hit the api
     @Test
-    public void testGetProductsByCategory_ShouldReturnFromDBAndHitAPISync() {
+    public void testGetProductsByCategory_ShouldReturnFromDB() {
         // TODO: Find out a way to return empty realm result
         ProductListResponse productListResponse = MockData.getProductListResponse();
         String category = MockData.getCategory();
@@ -62,8 +64,6 @@ public class CatalogRepositoryTest {
         RealmResults<Product> results = catalogRepository
                 .getProductsByCategory(category);
         verify(localStore).getProductByCategory(category);
-        verify(apiService).getProductList(1, category);
-        verify(localStore).saveProducts(productListResponse.getProducts());
     }
 
 

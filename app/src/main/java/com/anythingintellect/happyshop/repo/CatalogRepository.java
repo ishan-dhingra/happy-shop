@@ -9,6 +9,7 @@ import com.anythingintellect.happyshop.network.HappyShopAPIService;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.realm.RealmChangeListener;
 import io.realm.RealmResults;
 
 /**
@@ -41,6 +42,6 @@ public class CatalogRepository {
     }
 
     public RealmResults<Product> getProductsByCategory(String category) {
-        return null;
+        return localStore.getProductByCategory(category);
     }
 }
