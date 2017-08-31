@@ -17,11 +17,9 @@ import org.mockito.MockitoAnnotations;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
-import io.reactivex.schedulers.Schedulers;
 import io.realm.RealmResults;
 
 import static org.junit.Assert.assertNotEquals;
@@ -37,7 +35,7 @@ import static org.mockito.Mockito.when;
 @Config(manifest = Config.NONE)
 public class CatalogRepositoryTest extends BaseTest {
 
-    private CatalogRepository catalogRepository;
+    private CatalogRepositoryImpl catalogRepository;
     @Mock
     private LocalDataStore localStore;
     @Mock
@@ -47,7 +45,7 @@ public class CatalogRepositoryTest extends BaseTest {
     public void setup() {
         MockData.init();
         MockitoAnnotations.initMocks(this);
-        catalogRepository = new CatalogRepository(localStore, apiService);
+        catalogRepository = new CatalogRepositoryImpl(localStore, apiService);
     }
 
 
