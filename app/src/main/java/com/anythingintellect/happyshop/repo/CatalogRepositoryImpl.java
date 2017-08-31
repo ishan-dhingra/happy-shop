@@ -31,11 +31,12 @@ public class CatalogRepositoryImpl implements CatalogRepository {
 
     static {
         categories = new ArrayList<>();
-        categories.add(new Category("Skincare", R.mipmap.ic_launcher));
-        categories.add(new Category("Tools", R.mipmap.ic_launcher));
-        categories.add(new Category("Nails", R.mipmap.ic_launcher));
-        categories.add(new Category("Makeup", R.mipmap.ic_launcher));
-        categories.add(new Category("Men", R.mipmap.ic_launcher));
+        categories.add(new Category("Skincare", R.drawable.ic_skincare));
+        categories.add(new Category("Tools", R.drawable.ic_tools));
+        categories.add(new Category("Nails", R.drawable.ic_nail));
+        categories.add(new Category("Makeup", R.drawable.ic_makeup));
+        categories.add(new Category("Men", R.drawable.ic_men));
+        categories.add(new Category("Bath & Body", R.drawable.ic_bath));
     }
 
 

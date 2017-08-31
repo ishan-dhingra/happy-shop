@@ -4,6 +4,8 @@ package com.anythingintellect.happyshop.view;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,9 +14,10 @@ import android.view.ViewGroup;
 
 import com.anythingintellect.happyshop.HappyShopApp;
 import com.anythingintellect.happyshop.R;
-import com.anythingintellect.happyshop.adapter.GenericAdapter;
+import com.anythingintellect.happyshop.adapter.CategoryAdapter;
 import com.anythingintellect.happyshop.di.ContextModule;
 import com.anythingintellect.happyshop.model.Category;
+import com.anythingintellect.happyshop.util.Navigator;
 import com.anythingintellect.happyshop.viewmodel.CategoryListViewModel;
 
 import javax.inject.Inject;
@@ -25,20 +28,22 @@ import javax.inject.Inject;
 public class CategoryListFragment extends Fragment {
 
     @Inject
-    private CategoryListViewModel viewModel;
-    private GenericAdapter<Category> categoryAdapter;
+    CategoryListViewModel viewModel;
+    @Inject
+    Navigator navigator;
+    private CategoryAdapter categoryAdapter;
 
 
     public CategoryListFragment() {
-        // Required empty public constructor
+        setRetainInstance(true);
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         inject();
-        categoryAdapter = new GenericAdapter<>(viewModel.getCategories());
         viewModel.loadCategories();
+        categoryAdapter = new CategoryAdapter(viewModel.getCategories(), navigator);
     }
 
     private void inject() {
@@ -65,7 +70,7 @@ public class CategoryListFragment extends Fragment {
 
     private void setupRv(RecyclerView rvList) {
         rvList.setAdapter(categoryAdapter);
-        rvList.setLayoutManager(new LinearLayoutManager(getContext()));
+        rvList.setLayoutManager(new GridLayoutManager(getContext(), 2));
     }
 
 
