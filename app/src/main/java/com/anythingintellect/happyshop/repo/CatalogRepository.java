@@ -85,4 +85,8 @@ public class CatalogRepository {
                     }
                 });
     }
+
+    public void fetchAndPersistProduct(long prodId) {
+
+    }
 }

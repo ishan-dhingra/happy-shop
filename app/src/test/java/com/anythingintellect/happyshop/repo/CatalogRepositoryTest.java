@@ -4,6 +4,7 @@ import com.anythingintellect.happyshop.db.LocalDataStore;
 import com.anythingintellect.happyshop.model.Category;
 import com.anythingintellect.happyshop.model.Product;
 import com.anythingintellect.happyshop.model.ProductListResponse;
+import com.anythingintellect.happyshop.model.ProductResponse;
 import com.anythingintellect.happyshop.network.HappyShopAPIService;
 import com.anythingintellect.happyshop.util.MockData;
 
@@ -15,12 +16,14 @@ import org.mockito.MockitoAnnotations;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
 import io.realm.RealmResults;
 
 import static org.junit.Assert.assertNotEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -93,6 +96,20 @@ public class CatalogRepositoryTest {
 
     // fetchAndPersistForProductId
     // Should fetch single product from api and persist
+    @Test
+    public void testFetchAndPersistForProductId_ShouldCallAPIAndSaveInLocalStore() {
+        Product product = MockData.getProduct();
+        ProductResponse productResponse = new ProductResponse();
+        productResponse.setProduct(product);
+        long prodId = product.getId();
+        when(apiService.getProduct(prodId)).thenReturn(Observable.just(productResponse));
+
+        catalogRepository.fetchAndPersistProduct(prodId);
+
+        verify(apiService).getProduct(prodId);
+        verify(localStore).saveProducts(any(List.class));
+
+    }
 
 
 }
