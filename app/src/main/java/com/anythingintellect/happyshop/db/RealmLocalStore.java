@@ -31,8 +31,13 @@ public class RealmLocalStore implements LocalDataStore {
     }
 
     @Override
-    public void saveProducts(List<Product> products) {
-        
+    public void saveProducts(final List<Product> products) {
+        realm.executeTransactionAsync(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                realm.copyToRealmOrUpdate(products);
+            }
+        });
     }
 
     @Override

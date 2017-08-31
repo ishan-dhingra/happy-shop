@@ -66,20 +66,20 @@ public class Product extends RealmObject {
     public void setUnderSale(boolean underSale) {
         this.underSale = underSale;
     }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == this) {
-            return true;
-        }
-        if (obj instanceof Product) {
-            return ((Product)obj).getId() == id;
-        }
-        return false;
-    }
-
-    @Override
-    public int hashCode() {
-        return (int) (id % Integer.MAX_VALUE);
-    }
+//
+//    @Override
+//    public boolean equals(Object obj) {
+//        if (obj == this) {
+//            return true;
+//        }
+//        if (obj instanceof Product) {
+//            return ((Product)obj).getId() == id;
+//        }
+//        return false;
+//    }
+//
+//    @Override
+//    public int hashCode() {
+//        return (int) (id % Integer.MAX_VALUE);
+//    }
 }

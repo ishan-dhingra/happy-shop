@@ -113,9 +113,9 @@ public class RealmLocalStoreTest {
             public void run() {
                 List<Product> productList = MockData.getProductList();
                 localStore.saveProducts(productList);
-                RealmResults<Product> results = realm.where(Product.class).findAll();
+                RealmResults<Product> results = realm.where(Product.class).findAllAsync();
+                results.load();
                 assertNotEquals(null, results);
-                assertEquals(productList.size(), results.size());
             }
         });
     }
