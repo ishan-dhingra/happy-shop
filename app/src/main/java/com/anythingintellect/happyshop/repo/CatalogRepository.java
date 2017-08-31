@@ -4,11 +4,17 @@ import com.anythingintellect.happyshop.R;
 import com.anythingintellect.happyshop.db.LocalDataStore;
 import com.anythingintellect.happyshop.model.Category;
 import com.anythingintellect.happyshop.model.Product;
+import com.anythingintellect.happyshop.model.ProductListResponse;
 import com.anythingintellect.happyshop.network.HappyShopAPIService;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.Observer;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
 import io.realm.RealmChangeListener;
 import io.realm.RealmResults;
 
@@ -50,6 +56,33 @@ public class CatalogRepository {
     }
 
     public void fetchAndPersistProducts(int page, String category) {
+        apiService.getProductList(page, category)
+                .subscribeOn(Schedulers.newThread())
+                .map(new Function<ProductListResponse, List<Product>>() {
+                    @Override
+                    public List<Product> apply(@NonNull ProductListResponse productListResponse) throws Exception {
+                        return productListResponse.getProducts();
+                    }
+                }).subscribe(new Observer<List<Product>>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
 
+                    }
+
+                    @Override
+                    public void onNext(@NonNull List<Product> products) {
+                        localStore.saveProducts(products);
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 }
