@@ -1,5 +1,6 @@
 package com.anythingintellect.happyshop.repo;
 
+import com.anythingintellect.happyshop.BaseTest;
 import com.anythingintellect.happyshop.db.LocalDataStore;
 import com.anythingintellect.happyshop.model.Category;
 import com.anythingintellect.happyshop.model.Product;
@@ -20,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
+import io.reactivex.schedulers.Schedulers;
 import io.realm.RealmResults;
 
 import static org.junit.Assert.assertNotEquals;
@@ -33,7 +35,7 @@ import static org.mockito.Mockito.when;
 
 @RunWith(RobolectricTestRunner.class)
 @Config(manifest = Config.NONE)
-public class CatalogRepositoryTest {
+public class CatalogRepositoryTest extends BaseTest {
 
     private CatalogRepository catalogRepository;
     @Mock
@@ -88,7 +90,12 @@ public class CatalogRepositoryTest {
         when(apiService.getProductList(page, category)).thenReturn(Observable.just(productListResponse));
 
         catalogRepository.fetchAndPersistProducts(page, category);
-
+        // TODO: Find way to execute observable immediately
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         verify(apiService).getProductList(page, category);
         verify(localStore).saveProducts(productListResponse.getProducts());
 
