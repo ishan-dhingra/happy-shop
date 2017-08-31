@@ -46,6 +46,10 @@ public class CatalogRepository {
     }
 
     public RealmResults<Product> getProductId(long id) {
-        return null;
+        return localStore.getProductById(id);
+    }
+
+    public void fetchAndPersistProducts(int page, String category) {
+
     }
 }

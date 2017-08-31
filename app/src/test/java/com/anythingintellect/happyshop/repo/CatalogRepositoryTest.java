@@ -75,5 +75,24 @@ public class CatalogRepositoryTest {
         verify(localStore).getProductById(prodId);
     }
 
+    // fetchAndPersistForPageAndCategory
+    // Should fetch from api and save in local store
+    @Test
+    public void testFetchAndPersistForPageAndCategory_ShouldCallAPIAndSaveInLocalStore() {
+        ProductListResponse productListResponse = MockData.getProductListResponse();
+        String category = MockData.getCategory();
+        int page = 1;
+        when(apiService.getProductList(page, category)).thenReturn(Observable.just(productListResponse));
+
+        catalogRepository.fetchAndPersistProducts(page, category);
+
+        verify(apiService).getProductList(page, category);
+        verify(localStore).saveProducts(productListResponse.getProducts());
+
+    }
+
+    // fetchAndPersistForProductId
+    // Should fetch single product from api and persist
+
 
 }
