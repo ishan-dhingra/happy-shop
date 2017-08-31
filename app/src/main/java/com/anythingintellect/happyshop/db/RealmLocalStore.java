@@ -56,7 +56,14 @@ public class RealmLocalStore implements LocalDataStore {
     }
 
     @Override
-    public void addToCart(long id) {
-
+    public void addToCart(final long id) {
+        realm.executeTransactionAsync(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                CartEntry cartEntry = new CartEntry();
+                cartEntry.setProductId(id);
+                realm.copyToRealmOrUpdate(cartEntry);
+            }
+        });
     }
 }
