@@ -22,6 +22,6 @@ public class CartRepository {
     }
 
     public RealmResults<CartEntry> getCartEntry(long productId) {
-        return null;
+        return localStore.getCartEntryByProduct(productId);
     }
 }
