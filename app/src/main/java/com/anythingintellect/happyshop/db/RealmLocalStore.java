@@ -42,7 +42,9 @@ public class RealmLocalStore implements LocalDataStore {
 
     @Override
     public RealmResults<Product> getProductById(long id) {
-        return null;
+        return realm.where(Product.class).
+                equalTo("id", id).
+                findAllAsync();
     }
 
     @Override
