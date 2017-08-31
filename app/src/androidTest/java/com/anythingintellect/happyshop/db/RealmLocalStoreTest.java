@@ -1,5 +1,11 @@
 package com.anythingintellect.happyshop.db;
 
+import android.os.Handler;
+import android.os.HandlerThread;
+import android.os.Looper;
+import android.support.test.InstrumentationRegistry;
+import android.support.test.annotation.UiThreadTest;
+import android.support.test.rule.UiThreadTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.anythingintellect.happyshop.model.Product;
@@ -7,11 +13,13 @@ import com.anythingintellect.happyshop.util.MockData;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.util.List;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmResults;
@@ -29,44 +37,68 @@ public class RealmLocalStoreTest {
     private Realm realm;
     private RealmLocalStore localStore;
 
+    Handler realmHandler;
+
+
     @Before
     public void setup() {
-        RealmConfiguration.Builder builder = new RealmConfiguration.Builder();
-        builder.inMemory();
-        realm = Realm.getInstance(builder.build());
-        localStore = new RealmLocalStore(realm);
+        realmHandler = new Handler(Looper.getMainLooper());
+        realmHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                RealmConfiguration.Builder builder = new RealmConfiguration.Builder();
+                builder.inMemory();
+                realm = Realm.getInstance(builder.build());
+                localStore = new RealmLocalStore(realm);
+            }
+        });
+
         MockData.init();
     }
 
     @After
     public void tearDown() {
-        realm.close();
+        realmHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                realm.close();
+            }
+        });
     }
 
     // Should get product by category
     // Given db with category should return
     @Test
+    @UiThreadTest
     public void testGetProductByCategory_shouldReturnAllProductForGivenCategoryOnly() {
-        final List<Product> productList = MockData.getProductList();
-        realm.executeTransaction(new Realm.Transaction() {
+        realmHandler.post(new Runnable() {
             @Override
-            public void execute(Realm realm) {
-                realm.copyToRealmOrUpdate(productList);
+            public void run() {
+                final List<Product> productList = MockData.getProductList();
+                realm.executeTransaction(new Realm.Transaction() {
+                    @Override
+                    public void execute(Realm realm) {
+                        realm.copyToRealmOrUpdate(productList);
+                    }
+                });
+                String category = MockData.getCategory();
+                int expectedCount = 0;
+                for (Product product : productList) {
+                    if (product.getCategory().equals(category)) {
+                        ++expectedCount;
+                    }
+                }
+                RealmResults<Product> result = localStore.getProductByCategory(category);
+                assertNotEquals(null, result);
+                result.load();
+                assertEquals(expectedCount, result.size());
+                for (Product product : result) {
+                    assertEquals(category, product.getCategory());
+                }
             }
         });
-        String category = MockData.getCategory();
-        int expectedCount = 0;
-        for (Product product : productList) {
-            if (product.getCategory().equals(category)) {
-                ++expectedCount;
-            }
-        }
-        RealmResults<Product> result = localStore.getProductByCategory(category);
-        assertNotEquals(null, result);
-        assertEquals(expectedCount, result.size());
-        for (Product product : result) {
-            assertEquals(category, product.getCategory());
-        }
+
+
     }
 
     // Should save product list

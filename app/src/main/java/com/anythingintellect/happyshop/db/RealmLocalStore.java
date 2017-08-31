@@ -7,6 +7,7 @@ import java.util.List;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
+import io.realm.Sort;
 
 /**
  * Created by ishan.dhingra on 30/08/17.
@@ -24,7 +25,9 @@ public class RealmLocalStore implements LocalDataStore {
 
     @Override
     public RealmResults<Product> getProductByCategory(String category) {
-        return null;
+        return realm.where(Product.class)
+                .equalTo("category", category).
+                        findAllSortedAsync("id", Sort.ASCENDING);
     }
 
     @Override
