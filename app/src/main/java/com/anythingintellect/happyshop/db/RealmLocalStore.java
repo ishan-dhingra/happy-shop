@@ -49,7 +49,10 @@ public class RealmLocalStore implements LocalDataStore {
 
     @Override
     public RealmResults<CartEntry> getCartEntryByProduct(long id) {
-        return null;
+        return realm
+                .where(CartEntry.class)
+                .equalTo("productId",  id)
+                .findAllAsync();
     }
 
     @Override
