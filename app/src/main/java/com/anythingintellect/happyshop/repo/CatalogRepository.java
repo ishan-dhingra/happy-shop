@@ -44,4 +44,8 @@ public class CatalogRepository {
     public RealmResults<Product> getProductsByCategory(String category) {
         return localStore.getProductByCategory(category);
     }
+
+    public RealmResults<Product> getProductId(long id) {
+        return null;
+    }
 }

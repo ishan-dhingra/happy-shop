@@ -58,9 +58,7 @@ public class CatalogRepositoryTest {
     @Test
     public void testGetProductsByCategory_ShouldReturnFromDB() {
         // TODO: Find out a way to return empty realm result
-        ProductListResponse productListResponse = MockData.getProductListResponse();
         String category = MockData.getCategory();
-        when(apiService.getProductList(1, category)).thenReturn(Observable.just(productListResponse));
         RealmResults<Product> results = catalogRepository
                 .getProductsByCategory(category);
         verify(localStore).getProductByCategory(category);
@@ -69,6 +67,13 @@ public class CatalogRepositoryTest {
 
     // getProductById
     // Should return from localStore and hit the api
+    @Test
+    public void testGetProductById_ShouldReturnFromDB() {
+        long prodId = MockData.getProduct().getId();
+        RealmResults<Product> productResult = catalogRepository
+                .getProductId(prodId);
+        verify(localStore).getProductById(prodId);
+    }
 
 
 }
