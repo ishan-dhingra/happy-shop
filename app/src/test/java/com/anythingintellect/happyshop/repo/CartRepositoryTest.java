@@ -9,6 +9,8 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import io.realm.RealmResults;
+
 import static org.mockito.Mockito.verify;
 
 /**
@@ -41,6 +43,15 @@ public class CartRepositoryTest extends BaseTest {
 
     // getFromCart
     // Should get from local store cart
+    @Test
+    public void testGetFromCart_ShouldGetFromLocalCart() {
+        long productId = 1000L;
+        RealmResults<CartEntry> cartEntry =
+                cartRepository.getCartEntry(productId);
+        verify(localStore).getCartEntryByProduct(productId);
+
+    }
+
 
 
 
