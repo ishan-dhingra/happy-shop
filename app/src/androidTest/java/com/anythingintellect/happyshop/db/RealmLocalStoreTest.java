@@ -167,6 +167,21 @@ public class RealmLocalStoreTest {
     }
 
     // Should add to cart
+    @Test
+    @UiThreadTest
+    public void testAddToCart_ShouldAddCartEntryForProductId() {
+        runOnMainThread(new Runnable() {
+            @Override
+            public void run() {
+                Product product = MockData.getProduct();
+                localStore.addToCart(product.getId());
+                RealmResults<CartEntry> cartEntryResult = realm.where(CartEntry.class)
+                        .equalTo("productId", product.getId()).findAll();
+                assertNotEquals(0, cartEntryResult.size());
+                assertEquals(product.getId(), cartEntryResult.get(0).getProductId());
+            }
+        });
+    }
 
 
 }
