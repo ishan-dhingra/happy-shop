@@ -18,6 +18,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -104,6 +105,20 @@ public class RealmLocalStoreTest {
     }
 
     // Should save product list
+    @Test
+    @UiThreadTest
+    public void testSaveProducts_shouldSaveProducts() {
+        runOnMainThread(new Runnable() {
+            @Override
+            public void run() {
+                List<Product> productList = MockData.getProductList();
+                localStore.saveProducts(productList);
+                RealmResults<Product> results = realm.where(Product.class).findAll();
+                assertNotEquals(null, results);
+                assertEquals(productList.size(), results.size());
+            }
+        });
+    }
 
     // Should get product by id
 
