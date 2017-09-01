@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:bind="http://schemas.android.com/apk/res-auto">
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:fresco="http://schemas.android.com/tools">
 
     <data>
         <variable
@@ -14,10 +15,12 @@
         android:clickable="true"
         android:foreground="?android:attr/selectableItemBackground"
         android:layout_height="wrap_content">
-        <ImageView
+        <com.facebook.drawee.view.SimpleDraweeView
             android:layout_width="100dp"
-            android:src="@drawable/ic_bath"
-            android:layout_height="100dp" />
+            android:layout_height="100dp"
+            bind:imgUrl="@{vm.product.imgUrl}"
+            fresco:placeholderImage="@drawable/placeholder"
+            />
         <LinearLayout
             android:layout_width="match_parent"
             android:orientation="vertical"

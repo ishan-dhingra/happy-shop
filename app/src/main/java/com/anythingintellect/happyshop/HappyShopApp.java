@@ -7,6 +7,7 @@ import com.anythingintellect.happyshop.di.DaggerAppComponent;
 import com.anythingintellect.happyshop.di.NetworkModule;
 import com.anythingintellect.happyshop.di.PersistenceModule;
 import com.anythingintellect.happyshop.util.Constant;
+import com.facebook.drawee.backends.pipeline.Fresco;
 
 import io.realm.Realm;
 
@@ -21,6 +22,7 @@ public class HappyShopApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        Fresco.initialize(this);
         Realm.init(this);
         initAppComponent();
     }
