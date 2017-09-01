@@ -28,4 +28,8 @@ public class ProductItemViewModel  {
         return "$" + product.getPrice();
     }
 
+    public void onClick() {
+        navigator.openProductDetails(product.getId());
+    }
+
 }

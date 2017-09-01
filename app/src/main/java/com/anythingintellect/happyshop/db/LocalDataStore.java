@@ -27,4 +27,6 @@ public interface LocalDataStore {
 
     long getCartCount();
 
+    void removeFromCart(long id);
+
 }

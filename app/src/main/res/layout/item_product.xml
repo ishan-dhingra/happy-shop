@@ -9,17 +9,18 @@
             type="com.anythingintellect.happyshop.viewmodel.ProductItemViewModel"/>
     </data>
 
-    <LinearLayout android:orientation="horizontal" 
+    <LinearLayout android:orientation="horizontal"
         android:layout_width="match_parent"
         android:padding="5dp"
+        android:onClick="@{() -> vm.onClick()}"
         android:clickable="true"
         android:foreground="?android:attr/selectableItemBackground"
         android:layout_height="wrap_content">
         <com.facebook.drawee.view.SimpleDraweeView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
             bind:imgUrl="@{vm.product.imgUrl}"
             fresco:placeholderImage="@drawable/placeholder"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             />
         <LinearLayout
             android:layout_width="match_parent"

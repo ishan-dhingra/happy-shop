@@ -86,6 +86,7 @@ public class CatalogRepositoryImpl implements CatalogRepository {
     public Observable<Product> fetchAndPersistProduct(final long prodId) {
         return apiService.getProduct(prodId)
                 .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
                 .map(new Function<ProductResponse, Product>() {
                     @Override
                     public Product apply(@NonNull ProductResponse productResponse) throws Exception {

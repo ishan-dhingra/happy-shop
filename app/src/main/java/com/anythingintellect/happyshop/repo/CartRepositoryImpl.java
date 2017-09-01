@@ -28,6 +28,11 @@ public class CartRepositoryImpl implements CartRepository {
     }
 
     @Override
+    public void removeFromCart(long productId) {
+        localStore.removeFromCart(productId);
+    }
+
+    @Override
     public long getCartCount() {
         return localStore.getCartCount();
     }

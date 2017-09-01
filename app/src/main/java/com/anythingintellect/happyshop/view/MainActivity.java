@@ -33,6 +33,8 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
         getSupportFragmentManager().addOnBackStackChangedListener(this);
         if (savedInstanceState == null) {
             navigator.openCategoryList();
+        } else {
+            onBackStackChanged();
         }
     }
 
@@ -41,6 +43,12 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
                 .getAppComponent()
                 .plusContextModule(new ContextModule(this))
                 .inject(this);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        invalidateOptionsMenu();
     }
 
     @Override

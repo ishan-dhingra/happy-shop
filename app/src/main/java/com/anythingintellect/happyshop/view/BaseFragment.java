@@ -14,12 +14,7 @@ import com.anythingintellect.happyshop.di.ContextModule;
 
 public class BaseFragment extends Fragment {
 
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
+    
     public String getTitle() {
         return getString(R.string.app_name);
     }

@@ -4,7 +4,9 @@ import android.content.Context;
 
 
 import com.anythingintellect.happyshop.util.DefaultNavigator;
+import com.anythingintellect.happyshop.util.DefaultToaster;
 import com.anythingintellect.happyshop.util.Navigator;
+import com.anythingintellect.happyshop.util.Toaster;
 
 import dagger.Module;
 import dagger.Provides;
@@ -26,5 +28,11 @@ public class ContextModule {
     @PerContext
     public Navigator providesNavigator() {
         return new DefaultNavigator(context);
+    }
+
+    @Provides
+    @PerContext
+    public Toaster providesToaster() {
+        return new DefaultToaster(context);
     }
 }

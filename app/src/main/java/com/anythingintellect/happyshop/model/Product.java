@@ -22,6 +22,7 @@ public class Product extends RealmObject {
     private String imgUrl;
     @JsonProperty("under_sale")
     private boolean underSale;
+    private String description;
 
     public long getId() {
         return id;
@@ -85,5 +86,13 @@ public class Product extends RealmObject {
     @Override
     public int hashCode() {
         return (int) (id % Integer.MAX_VALUE);
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

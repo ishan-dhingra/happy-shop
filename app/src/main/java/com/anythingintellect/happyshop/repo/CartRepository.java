@@ -13,5 +13,7 @@ public interface CartRepository {
 
     RealmResults<CartEntry> getCartEntry(long productId);
 
+    void removeFromCart(long productId);
+
     long getCartCount();
 }

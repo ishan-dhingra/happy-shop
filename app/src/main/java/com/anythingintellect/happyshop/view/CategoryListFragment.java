@@ -41,9 +41,7 @@ public class CategoryListFragment extends BaseFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        inject();
-        viewModel.loadCategories();
-        categoryAdapter = new CategoryAdapter(viewModel.getCategories(), navigator);
+
     }
 
     private void inject() {
@@ -59,6 +57,9 @@ public class CategoryListFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        inject();
+        viewModel.loadCategories();
+        categoryAdapter = new CategoryAdapter(viewModel.getCategories(), navigator);
         return inflater.inflate(R.layout.fragment_category_list, container, false);
     }
 
@@ -72,6 +73,10 @@ public class CategoryListFragment extends BaseFragment {
     private void setupRv(RecyclerView rvList) {
         rvList.setAdapter(categoryAdapter);
         rvList.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        rvList.addItemDecoration(new DividerItemDecoration(getContext(),
+                DividerItemDecoration.VERTICAL));
+        rvList.addItemDecoration(new DividerItemDecoration(getContext(),
+                DividerItemDecoration.HORIZONTAL));
     }
 
 

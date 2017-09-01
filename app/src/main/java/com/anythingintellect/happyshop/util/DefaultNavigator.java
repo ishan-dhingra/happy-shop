@@ -1,6 +1,7 @@
 package com.anythingintellect.happyshop.util;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -8,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.anythingintellect.happyshop.R;
 import com.anythingintellect.happyshop.view.CategoryListFragment;
+import com.anythingintellect.happyshop.view.ProductDetailActivity;
 import com.anythingintellect.happyshop.view.ProductListFragment;
 
 /**
@@ -35,7 +37,7 @@ public class DefaultNavigator implements Navigator {
         fragmentManager.beginTransaction()
                 .add(R.id.container, fragment)
                 .addToBackStack(fragment.getClass().getName())
-                .commit();
+                .commitAllowingStateLoss();
     }
 
     @Override
@@ -50,6 +52,8 @@ public class DefaultNavigator implements Navigator {
 
     @Override
     public void openProductDetails(long productId) {
-
+        Intent productDetails = new Intent(context, ProductDetailActivity.class);
+        productDetails.putExtra(ProductDetailActivity.KEY_PRODUCT_ID, productId);
+        context.startActivity(productDetails);
     }
 }

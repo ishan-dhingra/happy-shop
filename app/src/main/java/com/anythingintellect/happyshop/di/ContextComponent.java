@@ -3,6 +3,7 @@ package com.anythingintellect.happyshop.di;
 import com.anythingintellect.happyshop.view.BaseFragment;
 import com.anythingintellect.happyshop.view.CategoryListFragment;
 import com.anythingintellect.happyshop.view.MainActivity;
+import com.anythingintellect.happyshop.view.ProductDetailActivity;
 import com.anythingintellect.happyshop.view.ProductListFragment;
 
 import dagger.Subcomponent;
@@ -16,6 +17,7 @@ import dagger.Subcomponent;
 public interface ContextComponent {
 
     void inject(MainActivity mainActivity);
+    void inject(ProductDetailActivity mainActivity);
     void inject(CategoryListFragment fragment);
     void inject(ProductListFragment fragment);
 

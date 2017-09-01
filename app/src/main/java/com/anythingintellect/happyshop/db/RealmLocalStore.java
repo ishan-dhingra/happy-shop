@@ -71,4 +71,17 @@ public class RealmLocalStore implements LocalDataStore {
     public long getCartCount() {
         return realm.where(CartEntry.class).count();
     }
+
+    @Override
+    public void removeFromCart(final long id) {
+        realm.executeTransactionAsync(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                RealmResults<CartEntry> realmResults = realm.where(CartEntry.class)
+                        .equalTo("productId", id).findAll();
+                realmResults.deleteAllFromRealm();
+            }
+        });
+
+    }
 }
