@@ -12,9 +12,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import io.reactivex.Observable;
 import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 import io.realm.RealmResults;
@@ -61,40 +64,27 @@ public class CatalogRepositoryImpl implements CatalogRepository {
     }
 
     @Override
-    public void fetchAndPersistProducts(int page, String category) {
-        apiService.getProductList(page, category)
+    public Observable<List<Product>> fetchAndPersistProducts(int page, String category) {
+        return apiService.getProductList(page, category)
                 .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
                 .map(new Function<ProductListResponse, List<Product>>() {
                     @Override
                     public List<Product> apply(@NonNull ProductListResponse productListResponse) throws Exception {
                         return productListResponse.getProducts();
                     }
-                }).subscribe(new Observer<List<Product>>() {
+                })
+                .doOnNext(new Consumer<List<Product>>() {
                     @Override
-                    public void onSubscribe(@NonNull Disposable d) {
-
-                    }
-
-                    @Override
-                    public void onNext(@NonNull List<Product> products) {
+                    public void accept(@NonNull List<Product> products) throws Exception {
                         localStore.saveProducts(products);
-                    }
-
-                    @Override
-                    public void onError(@NonNull Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onComplete() {
-
                     }
                 });
     }
 
     @Override
-    public void fetchAndPersistProduct(final long prodId) {
-        apiService.getProduct(prodId)
+    public Observable<Product> fetchAndPersistProduct(final long prodId) {
+        return apiService.getProduct(prodId)
                 .subscribeOn(Schedulers.newThread())
                 .map(new Function<ProductResponse, Product>() {
                     @Override
@@ -102,25 +92,10 @@ public class CatalogRepositoryImpl implements CatalogRepository {
                         return productResponse.getProduct();
                     }
                 })
-                .subscribe(new Observer<Product>() {
+                .doOnNext(new Consumer<Product>() {
                     @Override
-                    public void onSubscribe(@NonNull Disposable d) {
-
-                    }
-
-                    @Override
-                    public void onNext(@NonNull Product product) {
+                    public void accept(@NonNull Product product) throws Exception {
                         localStore.saveProducts(Collections.singletonList(product));
-                    }
-
-                    @Override
-                    public void onError(@NonNull Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onComplete() {
-
                     }
                 });
 

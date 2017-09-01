@@ -3,4 +3,7 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="txt_sale">Hot Deal!</string>
+    <string name="btn_retry">Try Again!</string>
+    <string name="txt_error">Oh boy! something went wrong.</string>
 </resources>

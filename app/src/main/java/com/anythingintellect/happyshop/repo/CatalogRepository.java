@@ -5,6 +5,7 @@ import com.anythingintellect.happyshop.model.Product;
 
 import java.util.List;
 
+import io.reactivex.Observable;
 import io.realm.RealmResults;
 
 /**
@@ -18,7 +19,7 @@ public interface CatalogRepository {
 
     RealmResults<Product> getProductId(long id);
 
-    void fetchAndPersistProducts(int page, String category);
+    Observable<List<Product>> fetchAndPersistProducts(int page, String category);
 
-    void fetchAndPersistProduct(long prodId);
+    Observable<Product> fetchAndPersistProduct(long prodId);
 }

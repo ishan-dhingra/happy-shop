@@ -1,5 +1,8 @@
 package com.anythingintellect.happyshop.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
@@ -7,6 +10,7 @@ import io.realm.annotations.PrimaryKey;
  * Created by ishan.dhingra on 30/08/17.
  */
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Product extends RealmObject {
 
     @PrimaryKey
@@ -14,9 +18,9 @@ public class Product extends RealmObject {
     private String name;
     private String category;
     private double price;
-    // img_url
+    @JsonProperty("img_url")
     private String imgUrl;
-    // under_sale
+    @JsonProperty("under_sale")
     private boolean underSale;
 
     public long getId() {
