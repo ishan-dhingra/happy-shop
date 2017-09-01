@@ -1,5 +1,6 @@
 package com.anythingintellect.happyshop.di;
 
+import com.anythingintellect.happyshop.view.BaseFragment;
 import com.anythingintellect.happyshop.view.CategoryListFragment;
 import com.anythingintellect.happyshop.view.MainActivity;
 

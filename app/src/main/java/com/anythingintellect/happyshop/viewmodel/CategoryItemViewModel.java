@@ -23,4 +23,8 @@ public class CategoryItemViewModel {
     public void setCategory(Category category) {
         this.category = category;
     }
+
+    public void onClick() {
+        navigator.openProductList(category.getName());
+    }
 }

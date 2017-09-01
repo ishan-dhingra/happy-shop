@@ -3,6 +3,7 @@ package com.anythingintellect.happyshop.util;
 import android.databinding.BindingAdapter;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,6 +20,11 @@ public class BindingUtils {
     @BindingAdapter("bind:drawableTop")
     public static void bindDrawableTop(TextView textView, int resource) {
         textView.setCompoundDrawablesWithIntrinsicBounds(0, resource, 0, 0);
+    }
+
+    @BindingAdapter("bind:visible")
+    public static void bindVisible(View view, boolean visible) {
+        view.setVisibility(visible ? View.VISIBLE : View.GONE);
     }
 
 }

@@ -25,7 +25,7 @@ import javax.inject.Inject;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class CategoryListFragment extends Fragment {
+public class CategoryListFragment extends BaseFragment {
 
     @Inject
     CategoryListViewModel viewModel;
@@ -53,6 +53,7 @@ public class CategoryListFragment extends Fragment {
                 .plusContextModule(new ContextModule(getActivity()))
                 .inject(this);
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

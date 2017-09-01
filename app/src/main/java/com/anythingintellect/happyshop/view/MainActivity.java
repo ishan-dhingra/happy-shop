@@ -1,5 +1,6 @@
 package com.anythingintellect.happyshop.view;
 
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,7 +18,7 @@ import com.anythingintellect.happyshop.util.Navigator;
 
 import javax.inject.Inject;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements FragmentManager.OnBackStackChangedListener {
 
     @Inject
     CartRepository cartRepository;
@@ -29,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         resolveDependency();
+        getSupportFragmentManager().addOnBackStackChangedListener(this);
         if (savedInstanceState == null) {
             navigator.openCategoryList();
         }
@@ -64,6 +66,35 @@ public class MainActivity extends AppCompatActivity {
             finish();
         } else {
             fragmentManager.popBackStack();
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home: {
+                onBackPressed();
+                return true;
+            }
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackStackChanged() {
+        Fragment fragment = getSupportFragmentManager()
+                .findFragmentById(R.id.container);
+        if (fragment != null) {
+            setTitle(((BaseFragment) fragment).getTitle());
+        }
+        if (fragment instanceof CategoryListFragment) {
+            getSupportActionBar().setHomeButtonEnabled(false);
+            getSupportActionBar().setHomeAsUpIndicator(null);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        } else {
+            getSupportActionBar().setHomeButtonEnabled(true);
+            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
     }
 }
